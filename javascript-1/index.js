@@ -17,6 +17,7 @@
 Ответ:
 	["a", "b", "c"]
 */
+
 function maxItemAssociation(arr){
 	let Recommendations = []; // Рекомендации
 	let buyUsers = arr;

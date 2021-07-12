@@ -51,20 +51,21 @@ function maxItemAssociation(arr){
 	})
 
 	// Анализируем список рекомендаций
-	let recommendSort = Recommendations.sort( function (a, b) {
-			return b.length - a.length;
-	})[0]; // Выбираем первый самый длинный
+	let indexBigItem = Recommendations.map(a=>a.length).indexOf(Math.max(...Recommendations.map(a=>a.length)))
+	let maxLengthRec = Recommendations[indexBigItem].length; // максимальная длина массива.
 
-	let recommendSort_Alphaber = recommendSort.sort((a, b) => a.localeCompare(b)); // Сортируем по алфавиту
+	recommendSort = Recommendations.filter(it=>it.length == maxLengthRec); // Только самые длинные
+	
+	let recommendSort_Alphaber = recommendSort.sort(function(a, b){
+		if(a < b) { return -1; }
+		if(a > b) { return 1; }
+		return 0;
+	})[0]
 
-	return recommendSort_Alphaber;
+	return recommendSort_Alphaber.sort((a, b) => a.localeCompare(b)); // Сортируем по алфавиту
 }
 
-maxItemAssociation([["a", "b"], ["a", "c"], ["d", "e"]]); 
-// >>>  ["a", "b", "c"]
-maxItemAssociation([["a", "e"], ["a", "c"], ["d", "e"]]);
-// >>> ["a", "d", "e"]
-maxItemAssociation([["a", "e", "d"], ["a", "c"], ["d", "e"]]);
-// >>> ["a", "c", "d", "e"]
 maxItemAssociation([ ["q", "w", 'a'], ["a", "b"], ["a", "c"], ["q", "e"], ["q", "r"]]);
 // >>> ["a", "b", "c", "e", "q", "r", "w"]
+maxItemAssociation([['q', 'w'],['a', 'b'],['a', 'c'],['q', 'e']]);
+// >>> ["a", "b", "c"]

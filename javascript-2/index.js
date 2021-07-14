@@ -1,9 +1,9 @@
-var fn1 = () => {
+let fn1 = () => {
     console.log('fn1')
     return Promise.resolve(1)
 }
 
-var fn2 = () => new Promise(resolve => {
+let fn2 = () => new Promise(resolve => {
     console.log('fn2')
     setTimeout(() => resolve(2), 1000)
 })
@@ -12,9 +12,9 @@ function promiseReduce(asyncFunctions, reduce, initialValue) {
     let promise = Promise.resolve(initialValue);
     asyncFunctions.forEach((fn) => {
         promise = promise.then(
-            async () => {
+            async (_initVal) => {
                 let res = await fn();
-                return reduce(1, res);
+                return reduce(_initVal, res);
             })
     })
     return promise;

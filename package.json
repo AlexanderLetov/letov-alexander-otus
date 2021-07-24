@@ -1,0 +1,23 @@
+{
+  "name": "letov-alexander-otus",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "jest": "^27.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexanderLetov/letov-alexander-otus.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexanderLetov/letov-alexander-otus/issues"
+  },
+  "homepage": "https://github.com/AlexanderLetov/letov-alexander-otus#readme"
+}

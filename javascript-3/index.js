@@ -13,6 +13,9 @@ const getPath = (val) => {
         parent = parent.parentElement;
     }
     
+    // var parent = val.parentNode;
+    // var index = parent.children.indexOf(child)
+    // var index = Array.prototype.indexOf.call(parent.children, val);
     
     let pathArr = []; // Путь до элемента
     let idIndex = elemetsArr.findIndex(element=>element.id);
@@ -22,7 +25,14 @@ const getPath = (val) => {
             const element = elemetsArr[index];
             if (element.tagName.toLowerCase() == "body" || element.tagName.toLowerCase() == "html") break;
 
-            pathArr.push(element.tagName)
+            // соседи и tagName
+            let idInNeighbors = Array.prototype.indexOf.call(element.parentElement.children, element); 
+            if (idInNeighbors != 0)  
+                pathArr.push(`${element.tagName}:nth-child(${idInNeighbors+1})`); // соседи есть
+            else  
+                pathArr.push(element.tagName); // соседей нету
+
+            // классы
             if (element.className != null || element.className != "") {
                 let className = element.className;
                 className = className.split(" ").filter(el => el != "").map(el => `.${el}`).join(' > ');
@@ -40,7 +50,14 @@ const getPath = (val) => {
             const element = elemetsArr[index];
             if (element.tagName == "BODY" || element.tagName == "HTML") break;
 
-            pathArr.push(element.tagName)
+            // соседи и tagName
+            let idInNeighbors = Array.prototype.indexOf.call(element.parentElement.children, element);
+            if (idInNeighbors != 0)  
+                pathArr.push(`${element.tagName}:nth-child(${idInNeighbors+1})`); // соседи есть
+            else  
+                pathArr.push(element.tagName); // соседей нету
+
+            // классы
             if (element.className != null || element.className != "") {
                 let className = element.className;
                 className = className.split(" ").filter(el => el != "").map(el => `.${el}`).join(' > ');
@@ -54,3 +71,7 @@ const getPath = (val) => {
 }
 
 module.exports = getPath;
+
+
+// Здравствуйте! А что если рядом с элементом будут находиться другие элементы на том же уровне? и мы захотим не первый параграф найти, а пятый?
+// Ваши тесты тоже корректно отработают и в этом случае, поэтому я хотел бы, чтобы Вы добавили поддержку nth-child и написали более сложные тесты для проверки различных кейсов

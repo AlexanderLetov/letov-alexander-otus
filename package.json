@@ -4,10 +4,18 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "jest": "^27.0.6"
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.1",
+    "jest": "^27.0.6",
+    "mongoose": "^5.13.5",
+    "nodemon": "^2.0.12"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "graphpack": "^1.0.9"
+  },
   "scripts": {
+    "dev": "nodemon graphql-1/index.js",
     "test": "jest",
     "tree": "node node-1/index.js"
   },

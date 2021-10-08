@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "create-ts-project": "^1.0.4",
     "express": "^4.17.1",
     "express-graphql": "^0.12.0",
     "graphql": "^15.5.1",
@@ -16,6 +17,7 @@
   },
   "scripts": {
     "dev": "nodemon graphql-1/index.js",
+    "start": "webpack",
     "test": "jest",
     "tree": "node node-1/index.js"
   },

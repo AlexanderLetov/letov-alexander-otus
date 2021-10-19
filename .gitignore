@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+/react-1/node_modules
 
 # testing
 /coverage

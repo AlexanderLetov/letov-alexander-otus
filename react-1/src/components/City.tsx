@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react';
 import { RouteComponentProps } from 'react-router';
 import { getWeaterCityByID, getWeaterForecast } from '../services/get-data'
+import ICityInfo, { ICityInfo_Foreacst } from '../interfaces/ICityInfo'
 var moment = require('moment');
 
 export default function City({ match }: RouteComponentProps) {
    const [currCityID, setCurrCityID] = useState(0);
-   const [cityInfo, setCityInfo] = useState({} as any);
-   const [forecastInfo, setForecastInfo] = useState({} as any);
+   const [cityInfo, setCityInfo] = useState({} as ICityInfo);
+   const [forecastInfo, setForecastInfo] = useState({} as ICityInfo_Foreacst);
 
    useEffect(() => {
       setCurrCityID(Number((match.params as any).id));
@@ -18,11 +19,11 @@ export default function City({ match }: RouteComponentProps) {
 
 
    const loadCityInfo = async () => {
-      let cityData = await getWeaterCityByID(currCityID)
-      setCityInfo(cityData);
+      let cityData = await getWeaterCityByID(currCityID);
+      setCityInfo(cityData as ICityInfo);
 
-      let forecastData = await getWeaterForecast(cityData.coord.lat, cityData.coord.lon)
-      setForecastInfo(forecastData);
+      let forecastData = await getWeaterForecast(cityData.coord.lat, cityData.coord.lon);
+      setForecastInfo(forecastData as ICityInfo_Foreacst);
    }
 
    const normalDate = (dt: Date) => {

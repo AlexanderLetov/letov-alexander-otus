@@ -1,15 +1,11 @@
 import { useState, useEffect } from 'react';
 import Select from 'react-select'
-
-const options = [
-   { value: 2643743, label: 'London' },
-   { value: 2950158, label: 'Berlin' },
-   { value: 5202009, label: 'Moscow' },
-   { value: 1816670, label: 'Beijing' },
-   { value: 2634715, label: 'Washington' },
-]
+import { allCity } from '../services/allCity'
+import { ICity } from '../interfaces/ICity'
+import { useHistory } from "react-router-dom"
 
 export default function ChangeCity() {
+   let history = useHistory();
    const [currCityID, setCurrCityID] = useState(0)
 
    useEffect(() => {
@@ -17,9 +13,10 @@ export default function ChangeCity() {
       if (currentCity != null && currentCity != "") setCurrCityID(Number(currentCity));
    }, [])
 
-   const change = (option: any) => {
-      setCurrCityID(option.value);
-      localStorage.setItem('currentCity', option.value);
+   const change = (option: ICity) => {
+      setCurrCityID(option.value || 0);
+      localStorage.setItem('currentCity', String(option.value));
+      history.push("/");
    }
 
    return (
@@ -29,10 +26,10 @@ export default function ChangeCity() {
          </h4>
          <div>
             <Select
-               options={options}
+               options={allCity}
                placeholder="Выберите значение"
-               onChange={change}
-               value={options.filter(option => (option as any).value == currCityID)}
+               onChange={(option) => change(option as ICity)}
+               value={allCity.filter(option => option.value === currCityID)}
             />
          </div>
       </div>

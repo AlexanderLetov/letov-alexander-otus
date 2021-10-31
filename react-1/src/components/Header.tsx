@@ -10,6 +10,7 @@ export default function Header() {
             <Navbar.Collapse id="basic-navbar-nav">
                <Nav className="me-auto">
                   <Nav.Link href="/change-current-city">Смена города</Nav.Link>
+                  <Nav.Link href="/favorites-city">Избранные города</Nav.Link>
                </Nav>
             </Navbar.Collapse>
          </Container>

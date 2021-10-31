@@ -1,20 +1,29 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { getWeaterCityByID } from '../services/get-data';
 import { Card, CardGroup, Button } from 'react-bootstrap'
+import { ICity } from '../interfaces/ICity'
+import CityGroup from './CityGroup'
 
 export default function Home() {
    const [cityInfo, setCityInfo] = useState({} as any);
+   const [favoritesCity, setFavoritesCity] = useState([] as ICity[]);
+   const [popularCity] = useState<ICity[]>([
+      { value: 2643743, label: "London" },
+      { value: 2643123, label: "Manchester" },
+      { value: 2644210, label: "Liverpool" }]);
+
 
    useEffect(() => {
       let currentCity = localStorage.getItem('currentCity');
       let homeCityData = localStorage.getItem('HomeCityData');
+      let favoritesCity = localStorage.getItem('favoritesCity');
 
       if (currentCity != null && currentCity != "") {
          let cityId = Number(currentCity);
 
          if (homeCityData != null && homeCityData != "") {
             let cityData = JSON.parse(homeCityData);
-            if (cityData.id == currentCity) {
+            if (cityData.id === currentCity) {
                setCityInfo(cityData);
             } else {
                loadCityInfo(cityId);
@@ -22,6 +31,11 @@ export default function Home() {
          } else {
             loadCityInfo(cityId);
          }
+      }
+
+      if (favoritesCity != null && favoritesCity != "") {
+         let _favoritesCity = JSON.parse(favoritesCity);
+         setFavoritesCity(_favoritesCity);
       }
    }, [])
 
@@ -36,14 +50,14 @@ export default function Home() {
          <div>
             {(cityInfo.main == null) &&
                <div>
-                  <h5>Текущий город не выбран.</h5>
+                  <h4>Текущий город не выбран</h4>
                   <h6>Выбор города доступен на <a href='/change-current-city'>этой странице</a></h6>
                </div>
             }
             {(cityInfo.main != null) &&
                <div>
                   <h4>
-                     Текущий город - {cityInfo.name}
+                     Текущий город - {cityInfo.name} ( <a href={`/city/${cityInfo.id}`}>Подробная информация</a> )
                   </h4>
                   <p>сейчас: {cityInfo.main.temp} </p>
                   <p>ощущается как: {cityInfo.main.feels_like} </p>
@@ -52,41 +66,32 @@ export default function Home() {
 
          </div>
          <div>
+
+            {(favoritesCity.length > 0) &&
+               <>
+                  <h4>
+                     Избранные города:
+                  </h4>
+                  <CityGroup
+                     data={favoritesCity}
+                  />
+               </>
+            }
+
+            {(favoritesCity.length === 0) &&
+               <div>
+                  <h4>Избранные города не выбраны</h4>
+                  <h6>Выбор городов доступен на <a href='/favorites-city'>этой странице</a></h6>
+               </div>
+            }
+         </div>
+         <div>
             <h4>
                Популярные города:
             </h4>
-            <CardGroup>
-               <Card style={{ width: '18rem' }}>
-                  <Card.Body>
-                     <Card.Title>London</Card.Title>
-                     <Button variant="primary" href="/city/2643743" >Перейти к городу</Button>
-                  </Card.Body>
-               </Card>
-               <Card style={{ width: '18rem' }}>
-                  <Card.Body>
-                     <Card.Title>Berlin</Card.Title>
-                     <Button variant="primary" href="/city/2950158" >Перейти к городу</Button>
-                  </Card.Body>
-               </Card>
-               <Card style={{ width: '18rem' }}>
-                  <Card.Body>
-                     <Card.Title>Moscow</Card.Title>
-                     <Button variant="primary" href="/city/5202009" >Перейти к городу</Button>
-                  </Card.Body>
-               </Card>
-               <Card style={{ width: '18rem' }}>
-                  <Card.Body>
-                     <Card.Title>Beijing</Card.Title>
-                     <Button variant="primary" href="/city/1816670" >Перейти к городу</Button>
-                  </Card.Body>
-               </Card>
-               <Card style={{ width: '18rem' }}>
-                  <Card.Body>
-                     <Card.Title>Washington</Card.Title>
-                     <Button variant="primary" href="/city/2634715" >Перейти к городу</Button>
-                  </Card.Body>
-               </Card>
-            </CardGroup>
+            <CityGroup
+               data={popularCity}
+            />
          </div>
 
       </div>

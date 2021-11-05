@@ -7,11 +7,10 @@ import CityGroup from './CityGroup'
 export default function Home() {
    const [cityInfo, setCityInfo] = useState({} as any);
    const [favoritesCity, setFavoritesCity] = useState([] as ICity[]);
-   const [popularCity] = useState<ICity[]>([
+   const popularCity: ICity[] = [
       { value: 2643743, label: "London" },
       { value: 2643123, label: "Manchester" },
-      { value: 2644210, label: "Liverpool" }]);
-
+      { value: 2644210, label: "Liverpool" }];
 
    useEffect(() => {
       let currentCity = localStorage.getItem('currentCity');

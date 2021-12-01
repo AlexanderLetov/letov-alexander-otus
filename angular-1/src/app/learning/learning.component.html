@@ -1,0 +1,16 @@
+<mat-form-field appearance="fill">
+   <mat-label>Выберите слово</mat-label>
+   <mat-select [(ngModel)]="rusVal">
+      <mat-option *ngFor="let learn of learningService.learns" [value]="learn.id">
+         {{learn.rus}}
+      </mat-option>
+   </mat-select>
+</mat-form-field>
+
+<div>
+   <mat-form-field>
+      <input matInput type="text" placeholder="Введите перевод слова" [(ngModel)]="translateVal"
+         (keydown.enter)="check()">
+   </mat-form-field>
+   <button mat-button color="primary" (click)="check()">Проверка</button>
+</div>

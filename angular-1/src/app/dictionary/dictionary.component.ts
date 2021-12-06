@@ -20,6 +20,18 @@ export class DictionaryComponent implements OnInit {
    ngOnInit(): void {
    }
 
+   ngAfterViewInit() {
+      let local = localStorage.getItem('dataSource');
+      if ((local != null || local != "") && this.learningService.learns.length == 0) {
+         let localLearns = JSON.parse(local || "") as Learn[];
+         localLearns.forEach(learn => {
+            this.learningService.addLearn(learn);
+         });
+
+         this.dictTable.renderRows();
+      }
+   }
+
    onChange(id: number) {
       this.learningService.onToggle(id)
    }
@@ -32,13 +44,12 @@ export class DictionaryComponent implements OnInit {
       this.http.get(`https://api.mymemory.translated.net/get?q=${this.newLearnVal}&langpair=rus|en`)
          .pipe(tap(data => { }),
       ).subscribe(result => {
-
          let _eng = (result as any).responseData.translatedText;
          if (this.newLearnVal === _eng) {
             alert("Перевод слова не найден");
             return;
          }
-         const todo: Learn = {
+         const learn: Learn = {
             id: (this.learningService.learns.length === 0) ? 1 : Math.max.apply(Math, this.learningService.learns.map(function (o) { return o.id; })) + 1,
             eng: _eng,
             rus: this.newLearnVal,
@@ -46,11 +57,11 @@ export class DictionaryComponent implements OnInit {
             date: new Date()
          }
 
-         this.learningService.addLearn(todo);
+         this.learningService.addLearn(learn);
          this.newLearnVal = '';
          this.dictTable.renderRows();
-
       }
       );
    }
+
 }

@@ -1,5 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
-import { NgModule } from '@angular/core';
+import { Component, NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { MatTableModule } from '@angular/material/table';
@@ -16,29 +18,43 @@ import { AppComponent } from './app.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
 import { LearningComponent } from './learning/learning.component';
 import { SettingsComponent } from './settings/settings.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { PracticeComponent } from './practice/practice.component';
+
+const appRoutes: Routes = [
+   { path: '', component: AppComponent },
+   { path: 'dictionary', component: DictionaryComponent },
+   { path: 'learn', component: LearningComponent },
+   { path: 'setting', component: SettingsComponent },
+   { path: 'practice', component: PracticeComponent },
+   { path: '**', component: NotFoundComponent },
+]
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    DictionaryComponent,
-    LearningComponent,
-    SettingsComponent,
-  ],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    FormsModule,
-    MatTableModule,
-    MatButtonModule,
-    MatInputModule,
-    MatFormFieldModule,
-    MatTabsModule,
-    BrowserAnimationsModule,
-    MatSelectModule,
-    MatPaginatorModule,
-    MatCheckboxModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+   declarations: [
+      AppComponent,
+      DictionaryComponent,
+      LearningComponent,
+      SettingsComponent,
+      NotFoundComponent,
+      PracticeComponent,
+   ],
+   imports: [
+      BrowserModule,
+      HttpClientModule,
+      FormsModule,
+      MatTableModule,
+      MatButtonModule,
+      MatInputModule,
+      MatFormFieldModule,
+      MatTabsModule,
+      BrowserAnimationsModule,
+      MatSelectModule,
+      MatPaginatorModule,
+      MatCheckboxModule,
+      RouterModule.forRoot(appRoutes)
+   ],
+   providers: [],
+   bootstrap: [AppComponent]
 })
 export class AppModule { }

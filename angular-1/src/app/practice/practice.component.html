@@ -1,0 +1,11 @@
+<div>
+   <mat-form-field>
+      <input disabled matInput type="text" placeholder="Слово на английском" [(ngModel)]="currText">
+   </mat-form-field>
+   <mat-form-field>
+      <input matInput type="text" placeholder="Введите перевод на русском слова" [(ngModel)]="userText"
+         (keydown.enter)="nextLearn()">
+   </mat-form-field>
+   <button mat-button color="primary" (click)="nextLearn()">Следующее слово</button>
+   <button mat-button color="primary" (click)="start()">Начать сначала</button>
+</div>
